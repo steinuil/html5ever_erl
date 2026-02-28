@@ -1,0 +1,11 @@
+{application, html5ever_nif,
+ [{description, "html5ever bindings to Erlang"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {applications, [kernel, stdlib]},
+  {env, []},
+  {modules, []},
+  {licenses, "MIT"},
+  {files, ["LICENSE", "README.md", "native", "rebar.config", "rebar.lock", "src"]},
+  {links, []}
+ ]}.

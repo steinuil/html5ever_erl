@@ -1,1 +1,9 @@
 .envrc
+.rebar3
+*.beam
+erl_crash.dump
+target/
+cargo.hrl
+priv/crates
+rebar3.crashdump
+_build/

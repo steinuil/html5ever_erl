@@ -1,0 +1,12 @@
+[package]
+name = "html5ever_erl"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "html5ever_erl"
+path = "src/lib.rs"
+crate-type = ["dylib"]
+
+[dependencies]
+rustler = "0.37.2"
