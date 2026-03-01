@@ -37,7 +37,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "html5ever_erl"
+name = "html5ever_nif"
 version = "0.1.0"
 dependencies = [
  "html5ever",

@@ -1,10 +1,10 @@
 [package]
-name = "html5ever_erl"
+name = "html5ever_nif"
 version = "0.1.0"
 edition = "2024"
 
 [lib]
-name = "html5ever_erl"
+name = "html5ever_nif"
 path = "src/lib.rs"
 crate-type = ["dylib"]
 

@@ -1,12 +1,12 @@
 -module(html5ever_nif).
 
--export([add/2]).
+-export([parse_html5/1]).
 
 -include("cargo.hrl").
 -on_load(init/0).
 -define(NOT_LOADED, not_loaded(?LINE)).
 
-add(_A, _B) ->
+parse_html5(_Doc) ->
     ?NOT_LOADED.
 
 init() ->
