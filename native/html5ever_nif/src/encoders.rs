@@ -71,7 +71,7 @@ impl rustler::Encoder for Parent {
 
 impl rustler::Encoder for Node {
     fn encode<'a>(&self, env: rustler::Env<'a>) -> rustler::Term<'a> {
-        let data = match &self.data {
+        match &self.data {
             NodeData::Document => unreachable!(),
             NodeData::Doctype {
                 name,
@@ -80,6 +80,8 @@ impl rustler::Encoder for Node {
             } => tuple!(
                 env,
                 atom::doctype(),
+                self.id,
+                self.parent,
                 ErlStrTendril(name),
                 ErlStrTendril(public_id),
                 ErlStrTendril(system_id),
@@ -87,14 +89,28 @@ impl rustler::Encoder for Node {
             NodeData::ProcessingInstructions { target, contents } => tuple!(
                 env,
                 atom::processing_instructions(),
+                self.id,
+                self.parent,
                 ErlStrTendril(target),
                 ErlStrTendril(contents),
             ),
             NodeData::Text { contents } => {
-                tuple!(env, atom::text(), ErlStrTendril(&contents.borrow()))
+                tuple!(
+                    env,
+                    atom::text(),
+                    self.id,
+                    self.parent,
+                    ErlStrTendril(&contents.borrow())
+                )
             }
             NodeData::Comment { contents } => {
-                tuple!(env, atom::comment(), ErlStrTendril(contents),)
+                tuple!(
+                    env,
+                    atom::comment(),
+                    self.id,
+                    self.parent,
+                    ErlStrTendril(contents),
+                )
             }
             NodeData::Element {
                 name,
@@ -113,6 +129,8 @@ impl rustler::Encoder for Node {
                 let name = tuple!(
                     env,
                     atom::qualified_name(),
+                    self.id,
+                    self.parent,
                     match &name.prefix {
                         None => atom::none().encode(env),
                         Some(name) => tuple!(env, atom::some(), name),
@@ -121,11 +139,17 @@ impl rustler::Encoder for Node {
                     name.local,
                 );
 
-                tuple!(env, atom::element(), name, attrs, &self.children)
+                tuple!(
+                    env,
+                    atom::element(),
+                    self.id,
+                    self.parent,
+                    name,
+                    attrs,
+                    &self.children
+                )
             }
-        };
-
-        tuple!(env, atom::node(), self.id, self.parent, data)
+        }
     }
 }
 
