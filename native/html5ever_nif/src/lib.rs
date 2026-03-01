@@ -1,7 +1,10 @@
-use std::{cell::RefCell, collections::HashSet};
+use std::{
+    cell::{Ref, RefCell},
+    collections::HashSet,
+};
 
 use html5ever::{
-    Attribute, ExpandedName, QualName,
+    Attribute, QualName,
     interface::{NodeOrText, TreeSink},
     tendril::StrTendril,
 };
@@ -128,7 +131,7 @@ impl TreeSink for Sink {
     type Output = Self;
 
     type ElemName<'a>
-        = ExpandedName<'a>
+        = Ref<'a, QualName>
     where
         Self: 'a;
 
@@ -145,10 +148,10 @@ impl TreeSink for Sink {
     }
 
     fn elem_name<'a>(&'a self, target: &'a Self::Handle) -> Self::ElemName<'a> {
-        match self.nodes.borrow()[target.0].data {
-            NodeData::Element { ref name, .. } => name.expanded(),
+        Ref::map(self.nodes.borrow(), |nodes| match nodes[target.0].data {
+            NodeData::Element { ref name, .. } => name,
             _ => unreachable!("not an element"),
-        }
+        })
     }
 
     fn get_template_contents(&self, target: &Self::Handle) -> Self::Handle {
