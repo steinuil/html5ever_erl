@@ -155,22 +155,21 @@ impl rustler::Encoder for Node {
 
 impl rustler::Encoder for FlatSink {
     fn encode<'a>(&self, env: rustler::Env<'a>) -> Term<'a> {
-        let nodes = self.nodes.borrow();
-
-        let (node_keys, node_values): (Vec<_>, Vec<_>) = nodes
+        let (node_keys, node_values): (Vec<_>, Vec<_>) = self
+            .nodes
             .iter()
             .skip(1)
             .map(|n| (n.id.0.encode(env), n.encode(env)))
             .unzip();
         let nodes_term = Term::map_from_term_arrays(env, &node_keys, &node_values).unwrap();
 
-        let node_count = nodes.len();
+        let node_count = self.nodes.len();
 
         tuple!(
             env,
             atom::document(),
             node_count,
-            nodes[0].children,
+            self.nodes[0].children,
             nodes_term
         )
     }
