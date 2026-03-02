@@ -27,6 +27,7 @@
 
           buildInputs = with pkgs; [
             erlang-language-platform
+            erlfmt
 
             rustfmt
             rust-analyzer
