@@ -7,3 +7,4 @@ cargo.hrl
 priv/crates
 rebar3.crashdump
 _build/
+doc/
