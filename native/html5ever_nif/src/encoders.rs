@@ -1,4 +1,4 @@
-use html5ever::{QualName, tendril::StrTendril};
+use html5ever::{tendril::StrTendril, QualName};
 use rustler::Term;
 
 use crate::flat_sink::{FlatSink, Id, Node, NodeData, Parent};
@@ -115,7 +115,7 @@ impl rustler::Encoder for Node {
             NodeData::Element {
                 name,
                 attrs,
-                mathml_attotation_xml_integration_point: _,
+                // mathml_attotation_xml_integration_point: _,
             } => {
                 let attrs = rustler::Term::map_from_pairs(
                     env,

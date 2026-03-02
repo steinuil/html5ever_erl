@@ -41,7 +41,7 @@ pub enum NodeData {
     Element {
         name: QualName,
         attrs: Vec<Attribute>,
-        mathml_attotation_xml_integration_point: bool,
+        // mathml_attotation_xml_integration_point: bool,
     },
     ProcessingInstructions {
         target: StrTendril,
@@ -223,12 +223,12 @@ impl TreeSink for FlatSinkCell {
         &self,
         name: QualName,
         attrs: Vec<Attribute>,
-        flags: html5ever::interface::ElementFlags,
+        _flags: html5ever::interface::ElementFlags,
     ) -> Self::Handle {
         self.0.borrow_mut().create_node(NodeData::Element {
             name,
             attrs,
-            mathml_attotation_xml_integration_point: flags.mathml_annotation_xml_integration_point,
+            // mathml_attotation_xml_integration_point: flags.mathml_annotation_xml_integration_point,
         })
     }
 
